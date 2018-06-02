@@ -1,0 +1,20 @@
+{
+  "name": "express.js",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "John Serrano <jandreys15@gmail.com> (https://twitter.com/jandrey15)",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}
