@@ -19,7 +19,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   // resave: true, investigar mas -> https://www.npmjs.com/package/express-session
   resave: false,
-  // saveUninitialized: true,
+  // saveUninitialized: true, -> leer mas sobre esto
   saveUninitialized: false,
   store: new MongoStore({
     mongooseConnection: connection,
