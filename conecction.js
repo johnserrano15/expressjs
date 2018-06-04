@@ -17,9 +17,15 @@ class Connect {
   }
 
   connection() {
-    const uri = this.mode ? test_uri : prod_uri;
-    // console.log(uri)
-    return mongoose.createConnection(uri);
+    const uri = this.uri();
+    if(this.mode) {
+      return mongoose.connect(uri);
+    }
+    return mongoose.createConnection(uri); // Devuelvo la connection 
+  }
+
+  uri() {
+    return this.mode ? test_uri : prod_uri;
   }
 
   disconnect() {
