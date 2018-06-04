@@ -19,10 +19,11 @@ class Connect {
   connection() {
     const uri = this.mode ? test_uri : prod_uri;
     // console.log(uri)
-    return mongoose.createConnection(uri, (err, db) => {
-      if (err) return console.log('Error al conectar con la base de datos: ' + err)
-      console.log('Conexión a la base de datos establecidad....');
-    });
+    return mongoose.createConnection(uri);
+  }
+
+  disconnect() {
+    return mongoose.disconnect();
   }
 }
 

@@ -1,16 +1,20 @@
 const expect = require('chai').expect;
 const Connect = require('../conecction.js');
-const mongoose = require('mongoose');
 
 describe('Database tests mongodb', () => {
   
-  before((done) => {
-    // const db = new Connect('test');
-    mongoose.connect('mongodb://192.168.99.100:27017/test');
-    const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error'));
-    db.once('open', function () {
-      // console.log('We are connected to test database!');
+  beforeEach((done) => {
+    const db = new Connect('test');
+    // function clearDB() {
+    //   for (var i in mongoose.connection.collections) {
+    //     mongoose.connection.collections[i].remove(function () { });
+    //   }
+    //   return done();
+    // }
+
+    db.connection().on('error', (err) => { console.warn('Error al conectar con la base de datos:', err)});
+    db.connection().once('open', () => {
+      console.log('Conexión a la base de datos establecidad....');
       done();
     });
   })
@@ -25,6 +29,13 @@ describe('Database tests mongodb', () => {
   it('prueba', () => {
     const foo = 'bar'
     expect(foo).to.equal('bar');
-  })  
+  })
+
+  afterEach(function (done) {
+    const db = new Connect('test');
+    db.disconnect();
+    console.log('Connection close.')
+    return done();    
+  });
 
 })

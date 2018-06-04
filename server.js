@@ -27,6 +27,9 @@ app.get('/', (req, res) => {
   res.status(200).send(`Hola has visto esta página ${req.session.cuenta}`)
 })
 
-app.listen(port, () => {
-  console.log(`Escuchando en el port ${port}`)
+db.connection().on('open', () => {
+  app.listen(port, () => {
+    console.log(`Escuchando en el port ${port}`)
+  })
+  console.log('Conexión a la base de datos establecidad....')
 })
