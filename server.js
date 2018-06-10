@@ -4,6 +4,7 @@ const MongoStore = require('connect-mongo')(session); // Se usa par aguardar las
 const Connect = require('./conecction.js');
 require('dotenv').config();
 const db = new Connect();
+const conn = db.connect();
 
 const app = express();
 const port = 3000;
@@ -16,7 +17,7 @@ app.use(session({
   // saveUninitialized: true,
   saveUninitialized: false,
   store: new MongoStore({
-    mongooseConnection: db.connection(),
+    mongooseConnection: conn,
   })
 }));
 
@@ -27,7 +28,7 @@ app.get('/', (req, res) => {
   res.status(200).send(`Hola has visto esta página ${req.session.cuenta}`)
 })
 
-db.connection().on('open', () => {
+conn.on('open', () => {
   app.listen(port, () => {
     console.log(`Escuchando en el port ${port}`)
   })
