@@ -1,6 +1,9 @@
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session); // Se usa par aguardar las sessiones en mongodb ya que las sessiones por defecto se guardan en memoria del server.
+const bodyParser = require("body-parser");
+const passport = require('passport');
+
 const Connect = require('./conecction.js');
 require('dotenv').config();
 const db = new Connect();
@@ -20,6 +23,12 @@ app.use(session({
     mongooseConnection: conn,
   })
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   // console.log(req.session)
