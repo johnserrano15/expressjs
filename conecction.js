@@ -11,23 +11,22 @@ const prod_uri = 'mongodb://192.168.99.100:27017/auth';
 const test_uri = 'mongodb://192.168.99.100:27017/test';
 
 class Connect {
-  constructor(mode, done){
-    this.mode = mode
-    this.done = done
+  constructor(mode) {
+    this.mode = mode;
   }
 
-  connection() {
+  connect() {
     const uri = this.uri();
     mongoose.connect(uri);
-    return mongoose.connection; // Devuelvo la connection 
+    return mongoose.connection; // Devuelvo la connection
   }
 
   uri() {
     return this.mode ? test_uri : prod_uri;
   }
 
-  disconnect() {
-    return mongoose.disconnect();
+  connection() {
+    return mongoose.connection;
   }
 }
 
