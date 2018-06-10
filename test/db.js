@@ -7,6 +7,7 @@ describe('Database tests mongodb', () => {
   
   before((done) => {
     const db = new Connect('test');
+    // http://mongoosejs.com/docs/connections.html
     db.connection()
       .then(() => {
         console.log(`Conexión a la base de datos establecidad en: ${db.uri()}`);
