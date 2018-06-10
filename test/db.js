@@ -1,70 +1,55 @@
 const expect = require('chai').expect;
 const Connect = require('../conecction.js');
 const User = require('./utils/user.js');
-const mongoose = require('mongoose')
 
 describe('Database tests mongodb', () => {
-  
-  before((done) => {
-    const db = new Connect('test');
-    // http://mongoosejs.com/docs/connections.html
-    db.connection()
-      .then(() => {
-        console.log(`Conexión a la base de datos establecidad en: ${db.uri()}`);
-        done();
-      },
-      err => {
-        console.warn('Error al conectar con la base de datos:', err);
-      }
-    );
-    /* if (mongoose.connection.db) return done();
-    mongoose.connect('mongodb://192.168.99.100:27017/test', done); */
+  const db = new Connect('test');
+  const conn = db.connection();
+
+  beforeEach((done) => {
+    // console.log("before every test in every file");
+    console.log(`Conexión a la base de datos establecidad en: ${db.uri()}`);
+    // conn.on('connected', function() {
+    //   console.log(`Conexión a la base de datos establecidad en: ${db.uri()}`);
+    // });
+    
+    if(conn.readyState != 1) {
+      db.connection()
+      // console.log(`Conexión a la base de datos establecidad en: ${db.uri()}`);
+    }
+    // expect(conn.readyState).to.equal(1);
+    done();
   })
 
   describe('User model', () => {
-    // console.log('es es User -> '+ User)
     it('Save user', (done) => {
-      // const foo = 'bar'
-      // expect(foo).to.equal('bar');
-      // console.log(User)
-     /*  User.save()
+      User.save()
         .then((data) => {
-          console.log('Save'+ data)
-          // expect(!)
+          console.log('okk')
           done();
         })
         .catch((err) => {
           console.log(err)
           done(err);
-        }) */
-      done()
+        })
     })  
   })
 
- /*  it('prueba', () => {
-    const foo = 'bar'
-    expect(foo).to.equal('bar');
-  }) */
-
-  afterEach((done) => {
-    const db = new Connect('test');
-
-    // db.connection().dropDatabase((err) => {
-    //   if(err) return console.warn('Error al momento de eliminar la base de datos: ', err)
-      
-    //   db.disconnect();
-    //   console.log(`Connection close en: ${db.uri()} `);
-    //   done();
-    // });   
-    done();
+  describe('WebSocket test', function () {
+    it('should run test and invoke hooks', function (done) {
+      expect(1).to.equal(1);
+      done();
+    });
   });
-
- /*  after(function (done) {
-    db.connection.db.dropDatabase(function () {
-      db.connection.close(function () {
+  
+  afterEach((done) => {    
+    conn.dropDatabase(function () {
+      console.log('Fue destruida la base de datos')
+      conn.close(function () {
+        console.log('Se cerro la conexión')
         done();
       });
     });
-  }); */
+  });
 
 })

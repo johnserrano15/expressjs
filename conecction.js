@@ -18,10 +18,8 @@ class Connect {
 
   connection() {
     const uri = this.uri();
-    if(this.mode) {
-      return mongoose.connect(uri);
-    }
-    return mongoose.createConnection(uri); // Devuelvo la connection 
+    mongoose.connect(uri);
+    return mongoose.connection; // Devuelvo la connection 
   }
 
   uri() {
