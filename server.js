@@ -28,6 +28,8 @@ app.get('/', (req, res) => {
   res.status(200).send(`Hola has visto esta página ${req.session.cuenta}`)
 })
 
+conn.on("error", console.error.bind(console, "connection error"));
+
 conn.on('open', () => {
   app.listen(port, () => {
     console.log(`Escuchando en el port ${port}`)
