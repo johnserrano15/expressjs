@@ -36,10 +36,10 @@ passport.use(new LocalStrategy(
   }
 ))
 
-exports.estaAutenticado = (req, res, next) => {
+exports.isAuthenticate = (req, res, next) => {
   // Este metodo isAuthenticated se envia gracias a passport
   if (req.isAuthenticated()) {
     return next();
   }
-  res.status(401).send('Tienes que hacer login.')
-}
+  res.status(401).send("Tienes que hacer login.");
+};

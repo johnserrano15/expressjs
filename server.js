@@ -41,9 +41,9 @@ app.get('/', (req, res) => {
 
 app.post('/signup', userCtrl.postSignup);
 app.post('/login', userCtrl.postLogin);
-app.get('/logout', passportConfig.estaAutenticado, userCtrl.logout); // S esta autenticado si haga el logout
+app.get('/logout', passportConfig.isAuthenticate, userCtrl.logout); // S esta autenticado si haga el logout
 
-app.get('/user/info', passportConfig.estaAutenticado, (req, res) => {
+app.get('/user/info', passportConfig.isAuthenticate, (req, res) => {
   res.json(req.user); // Gracias a passport no devuelve un req.user con toda la info del user
 })
 
