@@ -28,6 +28,11 @@ class Connect {
   connection() {
     return mongoose.connection;
   }
+
+  createConnection() {
+    const uri = this.uri();
+    return mongoose.createConnection(uri);
+  }
 }
 
 module.exports = Connect;

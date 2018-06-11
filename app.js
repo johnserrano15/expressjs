@@ -9,13 +9,13 @@ const userCtrl = require("./controllers/user");
 
 require("dotenv").config();
 const db = new Connect();
-const conn = db.connect();
+const conn = db.createConnection();
 
 const app = express();
 
 // Esto es un middleware -> La función se ejecuta cada vez que la aplicación recibe una solicitud.
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || 'some-secret',
   // resave: true, investigar mas -> https://www.npmjs.com/package/express-session
   resave: false,
   // saveUninitialized: true,
@@ -46,4 +46,4 @@ app.get('/user/info', passportConfig.isAuthenticate, (req, res) => {
   res.json(req.user); // Gracias a passport no devuelve un req.user con toda la info del user
 })
 
-module.exports = { app, conn }
+module.exports = app;

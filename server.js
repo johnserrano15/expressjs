@@ -1,12 +1,16 @@
 const app = require('./app');
+const Connect = require('./conecction.js');
+
 const port = 3000;
+const db = new Connect();
+const conn = db.createConnection();
 
-app.conn.on('error', console.error.bind(console, 'connection error'));
+conn.on('error', console.error.bind(console, 'connection error'));
 
-app.conn.on('open', () => {
+conn.on('open', () => {
   console.log('Conexión a la base de datos establecidad....');
 });
 
-app.app.listen(port, () => {
+app.listen(port, () => {
   console.log(`Escuchando en el port ${port}`)
 })
