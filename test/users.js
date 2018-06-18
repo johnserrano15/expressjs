@@ -94,5 +94,6 @@ describe('Users request', () => {
         done();
       });
     });
+    db.disconnect();
   })
 })

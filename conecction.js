@@ -33,6 +33,10 @@ class Connect {
     const uri = this.uri();
     return mongoose.createConnection(uri);
   }
+
+  disconnect() {
+    return mongoose.disconnect();
+  }
 }
 
 module.exports = Connect;

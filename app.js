@@ -1,19 +1,20 @@
 const express = require("express");
-const session = require("express-session");
-const MongoStore = require("connect-mongo")(session); // Se usa par aguardar las sessiones en mongodb ya que las sessiones por defecto se guardan en memoria del server.
+// const session = require("express-session");
+// const MongoStore = require("connect-mongo")(session); // Se usa par aguardar las sessiones en mongodb ya que las sessiones por defecto se guardan en memoria del server.
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const passportConfig = require("./config/passport");
-const Connect = require("./conecction.js");
+// const Connect = require("./conecction.js");
 const userCtrl = require("./controllers/user");
+const session = require('./middlewares/session');
 
 require("dotenv").config();
-const db = new Connect();
-const conn = db.createConnection();
+// const db = new Connect();
+// const conn = db.createConnection();
 
 const app = express();
 
-// Esto es un middleware -> La función se ejecuta cada vez que la aplicación recibe una solicitud.
+/* // Esto es un middleware -> La función se ejecuta cada vez que la aplicación recibe una solicitud.
 app.use(session({
   secret: process.env.SESSION_SECRET || 'some-secret',
   // resave: true, investigar mas -> https://www.npmjs.com/package/express-session
@@ -24,6 +25,10 @@ app.use(session({
     mongooseConnection: conn,
   })
 }));
+ */
+
+
+app.use(session);
 
 app.use(passport.initialize());
 app.use(passport.session());
