@@ -30,7 +30,7 @@ describe('Users request', () => {
         .expect(200)
         .end((err, res) => {
           if (err) return done(err);
-          console.info(res.session)
+          // console.info(res)
           done();
         })
     })
@@ -42,7 +42,7 @@ describe('Users request', () => {
         .set('Accept', 'application/json')
         .expect(200)
         .end((err, res) => {
-          if (err) return done(err);
+          if (err) return done(err); 
           done();
         });
     })
