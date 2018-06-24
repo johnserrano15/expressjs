@@ -1,5 +1,5 @@
-const expect = require("chai").expect;
-const request = require("supertest");
+const expect = require('chai').expect;
+const request = require('supertest');
 const app = require('../app');
 const Connect = require('../conecction.js');
 
@@ -55,7 +55,6 @@ describe('Users request', () => {
         .get('/')
         .expect(200, done);
     });
-
     
     it('responds with json', (done) => {
       agent

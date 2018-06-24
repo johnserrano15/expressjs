@@ -1,14 +1,14 @@
-const express = require("express");
-// const session = require("express-session");
-// const MongoStore = require("connect-mongo")(session); // Se usa par aguardar las sessiones en mongodb ya que las sessiones por defecto se guardan en memoria del server.
-const bodyParser = require("body-parser");
-const passport = require("passport");
-const passportConfig = require("./config/passport");
-// const Connect = require("./conecction.js");
-const userCtrl = require("./controllers/user");
-const session = require('./middlewares/session');
+const express = require('express');
+// const session = require('express-session');
+// const MongoStore = require('connect-mongo')(session); // Se usa par aguardar las sessiones en mongodb ya que las sessiones por defecto se guardan en memoria del server.
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const passportConfig = require('./config/passport');
+// const Connect = require('./conecction.js');
+const userCtrl = require('./controllers/user');
+const middle = require('./middlewares/session');
 
-require("dotenv").config();
+require('dotenv').config();
 // const db = new Connect();
 // const conn = db.createConnection();
 
@@ -28,7 +28,7 @@ app.use(session({
  */
 
 
-app.use(session);
+app.use(middle.session);
 
 app.use(passport.initialize());
 app.use(passport.session());

@@ -1,13 +1,15 @@
 const app = require('./app');
-const Connect = require('./conecction');
+// const Connect = require('./conecction');
+const middle = require('./middlewares/session');
 
 const port = 3000;
-const db = new Connect();
-const conn = db.createConnection();
+// const db = new Connect();
+// const conn = db.connect();
+// console.log(middle.conn)
 
-conn.on('error', console.error.bind(console, 'connection error'));
+middle.conn.on('error', console.error.bind(console, 'connection error'));
 
-conn.on('open', () => {
+middle.conn.on('open', () => {
   console.log('Conexión a la base de datos establecidad....');
 });
 

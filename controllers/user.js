@@ -12,7 +12,7 @@ exports.postSignup = (req, res, next) => {
     if(userExist) return res.status(400).send('Ya ese email esta registrado.');
 
     newUser.save((err) => {
-      if (err) return nex(err);
+      if (err) return next(err);
       // Esto es gracias a passport que nos da un login
       req.logIn(newUser, (err) => {
         if (err) return next(err);
