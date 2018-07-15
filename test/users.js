@@ -3,8 +3,12 @@ const request = require('supertest');
 const app = require('../app');
 const Connect = require('../conecction.js');
 
+require('dotenv').config();
+
 describe('Users request', () => {
-  const db = new Connect('test');
+  let db = '';
+
+  process.env.SESSION_MONGO === 'test' ? db = new Connect('test') : db = '';
   const agent = request.agent(app);
   
   before((done) => {
@@ -85,14 +89,17 @@ describe('Users request', () => {
   })
 
   after((done) => {
+    // Recibimos solo la coneccion
     const conn = db.connection();
+    console.info(conn.readyState)
     conn.dropDatabase(function () {
       console.log('The database was destroyed!')
       conn.close(function () {
-        console.log('Close connection!')
+        console.log('Close connection! '+ conn.readyState)
         done();
       });
     });
-    db.disconnect();
+    // db.disconnect();
+    // console.info(conn.readyState)
   })
 })

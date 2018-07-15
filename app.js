@@ -6,11 +6,11 @@ const passport = require('passport');
 const passportConfig = require('./config/passport');
 // const Connect = require('./conecction.js');
 const userCtrl = require('./controllers/user');
-const middle = require('./middlewares/session');
+const middleSession = require('./middlewares/session');
 
-require('dotenv').config();
+// require('dotenv').config();
 // const db = new Connect();
-// const conn = db.createConnection();
+// const conn = db.connect();
 
 const app = express();
 
@@ -24,11 +24,9 @@ app.use(session({
   store: new MongoStore({
     mongooseConnection: conn,
   })
-}));
- */
+})); */
 
-
-app.use(middle.session);
+app.use(middleSession)
 
 app.use(passport.initialize());
 app.use(passport.session());

@@ -7,8 +7,8 @@ const mongoose = require('mongoose');
 });
  */
 
-const prod_uri = 'mongodb://192.168.99.100:27017/auth';
-const test_uri = 'mongodb://192.168.99.100:27017/test';
+const prod_uri = process.env.MONGO_URI || 'mongodb://192.168.99.100:27017/auth';
+const test_uri = process.env.MONGO_URI || 'mongodb://192.168.99.100:27017/test';
 
 class Connect {
   constructor(mode) {
