@@ -45,6 +45,13 @@ app.post('/signup', userCtrl.postSignup);
 app.post('/login', userCtrl.postLogin);
 app.get('/logout', passportConfig.isAuthenticate, userCtrl.logout); // S esta autenticado si haga el logout
 
+app.get('/login/facebook/return', 
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  }
+);
+
 app.get('/user/info', passportConfig.isAuthenticate, (req, res) => {
   res.json(req.user); // Gracias a passport no devuelve un req.user con toda la info del user
 })
