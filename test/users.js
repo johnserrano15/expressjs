@@ -91,15 +91,13 @@ describe('Users request', () => {
   after((done) => {
     // Recibimos solo la coneccion
     const conn = db.connection();
-    console.info(conn.readyState)
+    // console.info(conn.readyState)
     conn.dropDatabase(function () {
       console.log('The database was destroyed!')
       conn.close(function () {
-        console.log('Close connection! '+ conn.readyState)
+        console.log('Close connection!')
         done();
       });
     });
-    // db.disconnect();
-    // console.info(conn.readyState)
   })
 })

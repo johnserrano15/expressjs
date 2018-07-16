@@ -23,6 +23,15 @@ exports.postSignup = (req, res, next) => {
   })
 }
 
+/* 
+  app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+  
+*/
+
 exports.postLogin = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) return next(err)
