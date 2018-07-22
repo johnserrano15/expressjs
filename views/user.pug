@@ -1,0 +1,12 @@
+html
+  head
+    meta(charset='UTF-8')
+    title #{user.name} | Aplicación de ejemplo con autenticación
+  body
+    div.app
+      section.app-container
+        article.user
+          figure
+            img(src=user.photo)
+          h1 Bienvenido, #{user.name}
+          h2 Gracias por inciar sesión usando #{user.provider}

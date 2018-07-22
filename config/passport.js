@@ -2,6 +2,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const User = require('../models/user');
+const UserFacebook = require('../models/userFacebook');
+const config = require('../config');
 
 // Primero encriptamos la data del object mongoose que no llega por decirlo de alguna manera nos llega ese object y le damos de alta con done y solo pasamos el id de ese user
 passport.serializeUser((user, done) => {
@@ -36,17 +38,72 @@ passport.use(new LocalStrategy(
   }
 ))
 
-// passport.use(new FacebookStrategy({
-//     clientID: FACEBOOK_APP_ID,
-//     clientSecret: FACEBOOK_APP_SECRET,
-//     callbackURL: "http://localhost:3000/auth/facebook/callback"
-//   },
-//   function(accessToken, refreshToken, profile, cb) {
-//     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-//       return cb(err, user);
-//     });
-//   }
-// ));
+passport.use(new FacebookStrategy({
+    clientID: config.auth.facebook.clientID,
+    clientSecret: config.auth.facebook.clientSecret,
+    callbackURL: config.auth.facebook.callbackURL,
+    profileFields: ['id', 'emails', 'displayName', 'picture']
+  },
+  function(accessToken, refreshToken, profile, done) {
+    // console.info(profile)
+    const userProfile = {
+      provider_id: profile.id,
+      name: profile.displayName,
+      photo: profile.photos[0].value,
+      email: profile.emails[0].value,
+      provider: 'facebook'
+    }
+
+    //  process.nextTick(() => {
+    //   UserFacebook.findOne({provider_id: profile.id}, (err, user) => {
+    //     if (err) return done(err)
+    //     if (user) return done(null, user)
+
+    //     const newUser = new UserFacebook();
+    //     newUser.provider_id = userInfo.provider_id
+    //     newUser.name = userInfo.name
+    //     newUser.photo = userInfo.photo
+    //     newUser.email = userInfo.email
+    //     newUser.provider = userInfo.provider
+
+    //     newUser.save((err) => {
+    //       if(err) throw err
+    //       return done(null, newUser)
+    //     })
+    //   })
+    // })
+
+    findOrCreate(userProfile, function (err, user) {
+      if (err) { return done(err); }
+      console.info(user)
+      done(null, user);
+    });
+
+    function findOrCreate(userInfo, cb) {
+      console.info('_________________________')
+      User.findOne({provider_id: userInfo.provider_id}, (err, user) => {
+        console.info('data user mongo -> '+ user)
+
+        if (err) return cb(err)
+        if (user) return cb(null, user)
+        
+        // console.info(userInfo)
+        const newUser = new User();
+
+        newUser.provider_id = userInfo.provider_id
+        newUser.name = userInfo.name
+        newUser.photo = userInfo.photo
+        newUser.email = userInfo.email
+        newUser.provider = userInfo.provider
+
+        newUser.save((err) => {
+          if(err) throw err
+          return cb(null, newUser)
+        })
+      })
+    }
+  }
+));
 
 exports.isAuthenticate = (req, res, next) => {
   // Este metodo isAuthenticated se envia gracias a passport

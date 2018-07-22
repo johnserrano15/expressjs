@@ -21,6 +21,7 @@ if (process.env.SESSION_MONGO != 'test') {
 
   dataSession['store'] = new MongoStore({
     mongooseConnection: conn,
+    // ttl: 14 * 24 * 60 * 60 // = 14 days. Default
   })
 } 
 
