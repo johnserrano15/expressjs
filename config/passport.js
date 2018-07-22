@@ -54,47 +54,34 @@ passport.use(new FacebookStrategy({
       provider: 'facebook'
     }
 
-    //  process.nextTick(() => {
-    //   UserFacebook.findOne({provider_id: profile.id}, (err, user) => {
-    //     if (err) return done(err)
-    //     if (user) return done(null, user)
-
-    //     const newUser = new UserFacebook();
-    //     newUser.provider_id = userInfo.provider_id
-    //     newUser.name = userInfo.name
-    //     newUser.photo = userInfo.photo
-    //     newUser.email = userInfo.email
-    //     newUser.provider = userInfo.provider
-
-    //     newUser.save((err) => {
-    //       if(err) throw err
-    //       return done(null, newUser)
-    //     })
-    //   })
-    // })
-
     findOrCreate(userProfile, function (err, user) {
       if (err) { return done(err); }
-      console.info(user)
+      // console.info(user)
       done(null, user);
     });
 
     function findOrCreate(userInfo, cb) {
-      console.info('_________________________')
+      // console.info('_________________________')
       User.findOne({provider_id: userInfo.provider_id}, (err, user) => {
-        console.info('data user mongo -> '+ user)
+        // console.info('data user mongo -> '+ user)
 
         if (err) return cb(err)
         if (user) return cb(null, user)
         
         // console.info(userInfo)
-        const newUser = new User();
+        const newUser = new User({
+          provider_id: userInfo.provider_id,
+          name: userInfo.name,
+          photo: userInfo.photo,
+          email: userInfo.email,
+          provider: userInfo.provider
+        });
 
-        newUser.provider_id = userInfo.provider_id
+        /* newUser.provider_id = userInfo.provider_id
         newUser.name = userInfo.name
         newUser.photo = userInfo.photo
         newUser.email = userInfo.email
-        newUser.provider = userInfo.provider
+        newUser.provider = userInfo.provider */
 
         newUser.save((err) => {
           if(err) throw err

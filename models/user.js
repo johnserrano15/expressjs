@@ -12,7 +12,6 @@ const UserSchema = new Schema({
   password: { type: String },
   name: { type: String, required: true },
   provider_id: {type: String, unique: true},
-  name: String,
   photo: String,
   provider: String
 }, {

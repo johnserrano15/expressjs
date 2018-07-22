@@ -40,7 +40,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   // console.log(req.session)
-  console.info(req.user)
+  // console.info(req.user)
   // Cuenta es el nombre que le damos y lo agregamos al object session
   req.session.cuenta = req.session.cuenta ? req.session.cuenta + 1 : 1
   res.status(200).send(`Hola has visto esta página ${req.session.cuenta}`)
