@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "test-win": "set SESSION_MONGO=test&&mocha",
-    "test": "SESSION_MONGO=test mocha"
+    "test": "mocha"
   },
   "keywords": [],
   "author": "John Serrano <jandreys15@gmail.com> (https://twitter.com/jandrey15)",
