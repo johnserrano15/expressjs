@@ -1,23 +1,11 @@
-const passport = require('passport');
+'use strict'
+
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const User = require('../models/user');
-const UserFacebook = require('../models/userFacebook');
 const config = require('../config');
 
-// Primero encriptamos la data del object mongoose que no llega por decirlo de alguna manera nos llega ese object y le damos de alta con done y solo pasamos el id de ese user
-passport.serializeUser((user, done) => {
-  done(null, user._id);
-})
-
-// Lo segundo es desencrriptar ese id que nos llega para buscar el user y darle de alta con toda la info de ese user
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  })
-})
-
-passport.use(new LocalStrategy(
+exports.LocalStrategy = new LocalStrategy(
   { usernameField: 'email' }, (email, password, done) => {
     User.findOne({ email }, (err, user) => {
       if (err) {
@@ -36,9 +24,9 @@ passport.use(new LocalStrategy(
       }
     })
   }
-))
+)
 
-passport.use(new FacebookStrategy({
+exports.FacebookStrategy = new FacebookStrategy({
     clientID: config.auth.facebook.clientID,
     clientSecret: config.auth.facebook.clientSecret,
     callbackURL: config.auth.facebook.callbackURL,
@@ -90,7 +78,19 @@ passport.use(new FacebookStrategy({
       })
     }
   }
-));
+);
+
+// Primero encriptamos la data del object mongoose que no llega por decirlo de alguna manera nos llega ese object y le damos de alta con done y solo pasamos el id de ese user
+exports.serializeUser = (user, done) => {
+  done(null, user._id);
+}
+
+// Lo segundo es desencrriptar ese id que nos llega para buscar el user y darle de alta con toda la info de ese user
+exports.deserializeUser = (id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user);
+  })
+}
 
 exports.isAuthenticate = (req, res, next) => {
   // Este metodo isAuthenticated se envia gracias a passport

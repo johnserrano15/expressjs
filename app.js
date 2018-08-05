@@ -3,7 +3,7 @@ const express = require('express');
 // const MongoStore = require('connect-mongo')(session); // Se usa par aguardar las sessiones en mongodb ya que las sessiones por defecto se guardan en memoria del server.
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const passportConfig = require('./config/passport');
+const auth = require('./auth');
 // const Connect = require('./conecction.js');
 const userCtrl = require('./controllers/user');
 const middleSession = require('./middlewares/session');
@@ -26,17 +26,22 @@ app.use(session({
   })
 })); */
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: false }));
+
 app.set('view engine', 'pug');
 // app.set('views', `${__dirname}/views`)
 
-app.use(middleSession)
+app.use(middleSession);
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.urlencoded({ extended: false }));
+passport.use(auth.LocalStrategy);
+passport.use(auth.FacebookStrategy);
+passport.deserializeUser(auth.deserializeUser);
+passport.serializeUser(auth.serializeUser);
 
 app.get('/', (req, res) => {
   // console.log(req.session)
@@ -56,16 +61,16 @@ app.get('/user', (req, res) => {
 
 app.post('/signup', userCtrl.postSignup);
 app.post('/login', userCtrl.postLogin);
-app.get('/logout', passportConfig.isAuthenticate, userCtrl.logout); // S esta autenticado si haga el logout
+
+app.get('/logout', auth.isAuthenticate, userCtrl.logout); // Si esta autenticado, si haga el logout
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] } ));
-
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/user',
   failureRedirect: '/login/facebook'
 }));
 
-app.get('/user/info', passportConfig.isAuthenticate, (req, res) => {
+app.get('/user/info', auth.isAuthenticate, (req, res) => {
   res.json(req.user); // Gracias a passport no devuelve un req.user con toda la info del user
 })
 
