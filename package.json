@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
+    "start-travis": "node server.js",
     "test-win": "set SESSION_MONGO=test&&mocha",
     "test": "mocha"
   },
