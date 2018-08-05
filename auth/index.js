@@ -4,6 +4,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const User = require('../models/user');
 const config = require('../config');
+const jwt = require('jsonwebtoken');
 
 exports.LocalStrategy = new LocalStrategy(
   { usernameField: 'email' }, (email, password, done) => {
@@ -99,3 +100,17 @@ exports.isAuthenticate = (req, res, next) => {
   }
   res.status(401).send("Tienes que hacer login.");
 };
+
+// Implementacion jwt
+exports.sign = function (payload, secret, callback) {
+  jwt.sign(payload, secret, callback);
+}
+
+exports.verify = function (token, secret, callback) {
+  jwt.verify(token, secret, callback);
+}
+
+// module.exports = {
+//   sign,
+//   verify
+// }

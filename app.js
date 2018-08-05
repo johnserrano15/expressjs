@@ -7,7 +7,7 @@ const auth = require('./auth');
 // const Connect = require('./conecction.js');
 const userCtrl = require('./controllers/user');
 const middleSession = require('./middlewares/session');
-
+const jwt = require('express-jwt');
 // require('dotenv').config();
 // const db = new Connect();
 // const conn = db.connect();
@@ -55,7 +55,7 @@ app.get('/login/facebook', (req, res) => {
   res.render('index', { title: 'Hey', message: 'Hello there!'});
 })
 
-app.get('/user', (req, res) => {
+app.get('/user', auth.isAuthenticate, (req, res) => {
   res.render('user', {user: req.user})
 })
 
@@ -72,6 +72,27 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 
 app.get('/user/info', auth.isAuthenticate, (req, res) => {
   res.json(req.user); // Gracias a passport no devuelve un req.user con toda la info del user
+});
+/*
+Payload
+{
+  "permissions":{
+    "metrics":"read"
+  },
+  "username":"jandrey15",
+  "admin":true,
+  "iat":1516239022
+}
+*/
+app.get('/protected', jwt({ secret: 'andrey' }), (req, res) => {
+  const { user } = req;
+  if (!user || !user.username) {
+    return res.status(404).send('Not authorized')
+  }
+
+  console.log(user)
+  if (!req.user.admin) return res.sendStatus(401);
+  res.status(200).send(user)
 })
 
 module.exports = app;
