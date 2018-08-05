@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
   console.log('Conexión a la base de datos establecidad....');
 });
  */
+require('dotenv').config();
 
 const prod_uri = process.env.MONGO_URI || 'mongodb://192.168.99.100:27017/auth';
 const test_uri = process.env.MONGO_URI || 'mongodb://192.168.99.100:27017/test';
