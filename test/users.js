@@ -8,7 +8,7 @@ describe('Users request', () => {
   process.env.SESSION_MONGO === 'test' ? db = new Connect('test') : db = '';
   const agent = request.agent(app);
   
-  before((done) => {
+  before(function (done) {
     this.timeout(3000);
     let conn = db.connect();
     conn.on('error', console.error.bind(console, 'connection error'));
