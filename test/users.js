@@ -2,10 +2,10 @@ const expect = require('chai').expect;
 const request = require('supertest');
 const app = require('../app');
 const Connect = require('../conecction.js');
-if (process.env.MONGO_URI) {
-  require('../server');
-  console.log('ok paso -> '+ process.env.MONGO_URI)
-}
+// if (process.env.MONGO_URI) {
+//   require('../server');
+//   console.log('ok paso -> '+ process.env.MONGO_URI)
+// }
 
 describe('Users request', () => {
   let db = '';
