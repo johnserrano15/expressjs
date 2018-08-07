@@ -14,6 +14,8 @@ conn.on('open', () => {
   console.log('Conexión a la base de datos establecidad....');
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Escuchando en el port ${port}`)
 })
+
+module.exports = server;
