@@ -9,7 +9,6 @@ describe('Users request', () => {
   const agent = request.agent(app);
   
   before(function (done) {
-    this.timeout(3000);
     let conn = db.connect();
     conn.on('error', console.error.bind(console, 'connection error'));
     conn.once('open', function () {

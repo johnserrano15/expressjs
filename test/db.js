@@ -8,7 +8,8 @@ describe('Database tests mongodb', () => {
   // mongoosejs.com/docs/api.html#connection_Connection-readyState
   // https://mochajs.org/#hooks
 
-  beforeEach((done) => {
+  beforeEach(function (done) {
+    this.timeout(3000);
     const conn = db.connect();
     // console.info(conn.readyState);
 
