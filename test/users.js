@@ -48,41 +48,41 @@ describe('Users request', () => {
     })
   })
 
-  describe('GET /users', () => {
-    it('should server 200 on index', (done) => {
-      // request(app).get('/').expect('Content-Type', /html/).expect(200, done);
-      agent
-        .get('/')
-        .expect(200, done);
-    });
+  // describe('GET /users', () => {
+  //   it('should server 200 on index', (done) => {
+  //     // request(app).get('/').expect('Content-Type', /html/).expect(200, done);
+  //     agent
+  //       .get('/')
+  //       .expect(200, done);
+  //   });
     
-    it('responds with json', (done) => {
-      agent
-        .get('/user/info')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', 'application/json; charset=utf-8')
-        .expect(200, done);
-    })
+  //   it('responds with json', (done) => {
+  //     agent
+  //       .get('/user/info')
+  //       .set('Accept', 'application/json')
+  //       .expect('Content-Type', 'application/json; charset=utf-8')
+  //       .expect(200, done);
+  //   })
 
-    it('responds with email equal to web@johnserrano.co', () => {
-      return agent
-        .get('/user/info')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', 'application/json; charset=utf-8')
-        .expect(200)
-        .then(res => {
-          // console.info(res.body)
-          expect(res.body.email).to.equal('web@johnserrano.co');
-        })
-    })
+  //   it('responds with email equal to web@johnserrano.co', () => {
+  //     return agent
+  //       .get('/user/info')
+  //       .set('Accept', 'application/json')
+  //       .expect('Content-Type', 'application/json; charset=utf-8')
+  //       .expect(200)
+  //       .then(res => {
+  //         // console.info(res.body)
+  //         expect(res.body.email).to.equal('web@johnserrano.co');
+  //       })
+  //   })
 
-    it('responds with 200 logout', (done) => {
-      agent
-        .get('/logout')
-        .expect(200, done);
-    })
+  //   it('responds with 200 logout', (done) => {
+  //     agent
+  //       .get('/logout')
+  //       .expect(200, done);
+  //   })
 
-  })
+  // })
 
   after((done) => {
     // Recibimos solo la coneccion
