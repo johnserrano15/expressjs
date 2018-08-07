@@ -36,7 +36,7 @@ class Connect {
   }
 
   disconnect() {
-    return mongoose.disconnect();
+    mongoose.disconnect();
   }
 }
 

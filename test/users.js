@@ -1,21 +1,30 @@
 const expect = require('chai').expect;
 const request = require('supertest');
 const app = require('../app');
+// const express = require('express');
+// const session = require('express-session');
+// const MongoStore = require('connect-mongo')(session);
 const Connect = require('../conecction.js');
-// if (process.env.MONGO_URI) {
-//   require('../server');
-//   console.log('ok paso -> '+ process.env.MONGO_URI)
-// }
 
 describe('Users request', () => {
   let db = '';
-
   process.env.SESSION_MONGO === 'test' ? db = new Connect('test') : db = '';
+  
+  // app.use(session({
+  //   secret: process.env.SESSION_SECRET || 'some-secret',
+  //   // resave: true, investigar mas -> https://www.npmjs.com/package/express-session
+  //   resave: false,
+  //   // saveUninitialized: true,
+  //   saveUninitialized: false,
+  //   store: new MongoStore({
+  //     mongooseConnection: conn,
+  //     // ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+  //   })
+  // }))
   const agent = request.agent(app);
   
   before((done) => {
-    const conn = db.connect();
-
+    let conn = db.connect();
     conn.on('error', console.error.bind(console, 'connection error'));
     conn.once('open', function () {
       console.log(`We are connected to test database en: ${db.uri()}`);
@@ -104,9 +113,9 @@ describe('Users request', () => {
       })
     } else {
       conn.dropDatabase(function () {
-        console.log('The database was destroyed!')
+        console.log('The database was destroyed!');
         conn.close(function () {
-          console.log('Close connection!')
+          console.log('Close connection!');
           done();
         });
       });

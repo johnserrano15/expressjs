@@ -4,21 +4,17 @@ const Connect = require('../conecction.js');
 
 require('dotenv').config();
 
-const db = new Connect();
-conn = db.connect();
 const dataSession = {
   secret: process.env.SESSION_SECRET || 'some-secret',
   // resave: true, investigar mas -> https://www.npmjs.com/package/express-session
   resave: false,
   // saveUninitialized: true,
   saveUninitialized: false,
-  store: new MongoStore({
-    mongooseConnection: conn
-  })
 }
 
 if (process.env.SESSION_MONGO != 'test') {
-  conn = db.connect();
+  const db = new Connect();
+  const conn = db.connect();
   
   console.info(conn.readyState)
 

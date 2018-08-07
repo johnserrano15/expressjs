@@ -34,7 +34,7 @@ describe('Database tests mongodb', () => {
   })
 
   describe('WebSocket test', function () {
-    it('should run test and invoke hooks', function (done) {
+    it('Only test', function (done) {
       expect(1).to.equal(1);
       done();
     });
