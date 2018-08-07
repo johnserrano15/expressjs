@@ -34,7 +34,7 @@ describe('Database tests mongodb', () => {
   })
 
   describe('WebSocket test', function () {
-    it('Only test', function (done) {
+    it('Just one more test', function (done) {
       expect(1).to.equal(1);
       done();
     });
