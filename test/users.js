@@ -1,26 +1,11 @@
 const expect = require('chai').expect;
 const request = require('supertest');
 const app = require('../app');
-// const express = require('express');
-// const session = require('express-session');
-// const MongoStore = require('connect-mongo')(session);
 const Connect = require('../conecction.js');
 
 describe('Users request', () => {
   let db = '';
   process.env.SESSION_MONGO === 'test' ? db = new Connect('test') : db = '';
-  
-  // app.use(session({
-  //   secret: process.env.SESSION_SECRET || 'some-secret',
-  //   // resave: true, investigar mas -> https://www.npmjs.com/package/express-session
-  //   resave: false,
-  //   // saveUninitialized: true,
-  //   saveUninitialized: false,
-  //   store: new MongoStore({
-  //     mongooseConnection: conn,
-  //     // ttl: 14 * 24 * 60 * 60 // = 14 days. Default
-  //   })
-  // }))
   const agent = request.agent(app);
   
   before((done) => {
