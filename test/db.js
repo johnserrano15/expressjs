@@ -9,10 +9,9 @@ describe('Database tests mongodb', () => {
   // https://mochajs.org/#hooks
 
   beforeEach(function (done) {
-    this.timeout(3000);
+    // this.timeout(3000);
     const conn = db.connect();
     // console.info(conn.readyState);
-
     conn.on('error', console.error.bind(console, 'connection error'));
     conn.once('open', function () {
       console.log(`We are connected to test database en: ${db.uri()}`);
@@ -34,17 +33,19 @@ describe('Database tests mongodb', () => {
     })  
   })
 
-  describe('WebSocket test', function () {
-    it('Just one more test', function (done) {
-      expect(1).to.equal(1);
-      done();
-    });
-  });
+  // describe('WebSocket test', function () {
+  //   it('Just one more test', function (done) {
+  //     expect(1).to.equal(1);
+  //     done();
+  //   });
+  // });
   
   afterEach((done) => {
     const conn = db.connection();
     //MONGO_URI
     if (process.env.MONGO_URI) {
+      // El error era que al segundo test ya no existia la collection users
+      // Se podria validar si la collection existe
       conn.dropCollection('users', function () {
         console.log('The collection was destroyed!')
         conn.close(function () {
