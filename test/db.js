@@ -9,7 +9,7 @@ describe('Database tests mongodb', () => {
   // https://mochajs.org/#hooks
 
   beforeEach(function (done) {
-    // this.timeout(3000);
+    this.timeout(3000);
     const conn = db.connect();
     // console.info(conn.readyState);
     conn.on('error', console.error.bind(console, 'connection error'));

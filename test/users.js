@@ -9,7 +9,7 @@ describe('Users request', () => {
   const agent = request.agent(app);
   
   before(function (done) {
-    // this.timeout(2000);
+    this.timeout(3000);
     let conn = db.connect();
     conn.on('error', console.error.bind(console, 'connection error'));
     conn.once('open', function () {
@@ -19,7 +19,7 @@ describe('Users request', () => {
   })
 
   describe('POST /users', function () {
-    this.timeout(2000);
+    this.timeout(3000);
     it('responds with message 200', (done) => {
       agent
         .post('/signup')
@@ -32,13 +32,13 @@ describe('Users request', () => {
         .expect(200)
         .end((err, res) => {
           if (err) return done(err);
-          // console.info(res)
+          console.info(`ESTA ES LA RES -> `+ res)
           done();
         })
     })
 
     it('responds with message 200', (done) => {
-      this.timeout(2000);
+      // this.timeout(2000);
       agent
         .post('/login')
         .send({ email: 'web@johnserrano.co', password: '123456' })
