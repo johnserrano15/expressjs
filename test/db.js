@@ -20,25 +20,19 @@ describe('Database tests mongodb', () => {
   });
 
   describe('User model', () => {
-    it('Create and save user', (done) => {
-      User.save()
-        .then((data) => {
-          console.log('Create user')
-          done();
-        })
-        .catch((err) => {
-          console.log(err)
-          done(err);
-        })
+    it('Create and save user', async () => {
+      const user = await User.save();
+      // console.log(user)
+      expect(user.email).to.equal('ja@gmail.com')
     })  
   })
 
-  // describe('WebSocket test', function () {
-  //   it('Just one more test', function (done) {
-  //     expect(1).to.equal(1);
-  //     done();
-  //   });
-  // });
+  describe('WebSocket test', function () {
+    it('Just one more test', function (done) {
+      expect(1).to.equal(1);
+      done();
+    });
+  });
   
   afterEach((done) => {
     const conn = db.connection();

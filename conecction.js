@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 // mongoose.connect('mongodb://192.168.99.100:32768/prueba');
 // Se conecto a un container de docker
 /* const connection = mongoose.createConnection('mongodb://192.168.99.100:27017/auth', (err, res) => {
@@ -6,7 +7,7 @@ const mongoose = require('mongoose');
   console.log('Conexión a la base de datos establecidad....');
 });
  */
-require('dotenv').config();
+// require('dotenv').config();
 
 const prod_uri = process.env.MONGO_URI || 'mongodb://192.168.99.100:27017/auth';
 const test_uri = process.env.MONGO_URI || 'mongodb://192.168.99.100:27017/test';
