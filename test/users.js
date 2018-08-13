@@ -90,23 +90,12 @@ describe('Users request', () => {
   after((done) => {
     // Recibimos solo la coneccion
     const conn = db.connection();
-    //MONGO_URI
-    if (process.env.MONGO_URI) {
-      conn.dropCollection('users', function () {
-        console.log('The collection was destroyed!')
-        conn.close(function () {
-          console.log('Close connection!')
-          done();
-        });
-      })
-    } else {
-      conn.dropDatabase(function () {
-        console.log('The database was destroyed!');
-        conn.close(function () {
-          console.log('Close connection!');
-          done();
-        });
+    conn.dropDatabase(function () {
+      console.log('The database was destroyed!');
+      conn.close(function () {
+        console.log('Close connection!');
+        done();
       });
-    }
+    });
   })
 })

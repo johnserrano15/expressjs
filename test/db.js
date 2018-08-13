@@ -24,6 +24,7 @@ describe('Database tests mongodb', () => {
       const user = await User.save();
       // console.log(user)
       expect(user.email).to.equal('ja@gmail.com')
+      expect(user.name).to.be.a('string');
     })  
   })
 
@@ -36,26 +37,13 @@ describe('Database tests mongodb', () => {
   
   afterEach((done) => {
     const conn = db.connection();
-    //MONGO_URI
-    if (process.env.MONGO_URI) {
-      // El error era que al segundo test ya no existia la collection users
-      // Se podria validar si la collection existe
-      conn.dropCollection('users', function () {
-        console.log('The collection was destroyed!')
-        conn.close(function () {
-          console.log('Close connection!')
-          done();
-        });
-      })
-    } else {
-      conn.dropDatabase(function () {
-        console.log('The database was destroyed!')
-        conn.close(function () {
-          console.log('Close connection!')
-          done();
-        });
+    conn.dropDatabase(function () {
+      console.log('The database was destroyed!')
+      conn.close(function () {
+        console.log('Close connection!')
+        done();
       });
-    }
+    });
   });
 
 })

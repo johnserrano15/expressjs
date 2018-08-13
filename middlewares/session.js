@@ -12,12 +12,6 @@ const dataSession = {
   saveUninitialized: false,
 }
 
-// if (process.env.SESSION_MONGO === 'test') {
-//   dataSession['cookie'] = { maxAge: 60000 }
-//   dataSession['expires'] = new Date(Date.now() + (900000))
-//   dataSession['maxAge'] = new Date(Date.now() + (900000))
-// }
-
 if (process.env.SESSION_MONGO != 'test') {
   const db = new Connect();
   const conn = db.connect();
