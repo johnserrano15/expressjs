@@ -32,7 +32,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'pug');
 // app.set('views', `${__dirname}/views`)
-
 app.use(middleSession);
 
 app.use(passport.initialize());
@@ -49,6 +48,7 @@ app.get('/', (req, res) => {
   // Cuenta es el nombre que le damos y lo agregamos al object session
   req.session.cuenta = req.session.cuenta ? req.session.cuenta + 1 : 1
   res.status(200).send(`Hola has visto esta página ${req.session.cuenta}`)
+  // res.status(200).send('ok bien')
 })
 
 app.get('/login/facebook', (req, res) => {
