@@ -9,7 +9,7 @@ services:
 
 before_install:
   - docker pull mongo:3.6
-  - docker run --name mongodb_test -d -P mongo:3.6
+  - docker run --name mongodb_test -d -p 27017:27017 mongo:3.6
   - docker ps
 
 install:
