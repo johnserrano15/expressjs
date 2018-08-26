@@ -8,6 +8,7 @@ const auth = require('./auth');
 const userCtrl = require('./controllers/user');
 const middleSession = require('./middlewares/session');
 const jwt = require('express-jwt');
+const config = require('./config');
 // require('dotenv').config();
 // const db = new Connect();
 // const conn = db.connect();
@@ -95,7 +96,7 @@ app.get('/verify', (req, res) => {
   res.status(200).send('Ok todo bien')
 })
 
-app.get('/protected', jwt({ secret: 'andrey' }), (req, res) => {
+app.get('/protected', jwt({ secret: config.secret }), (req, res) => {
   const { user } = req;
   if (!user || !user.name) {
     return res.status(404).send('Not authorized')

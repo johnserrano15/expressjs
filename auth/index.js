@@ -104,7 +104,7 @@ exports.isAuthenticate = (req, res, next) => {
 // Implementacion jwt
 exports.sign = function (payload, secret, callback) {
   // jwt.sign(payload, secret, callback);
-  console.log('payload -> '+ payload)
+  // console.log('payload -> '+ payload)
   const token = jwt.sign(payload, secret, callback);
   return token;
 }

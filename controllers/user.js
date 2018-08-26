@@ -1,6 +1,7 @@
 const passport = require('passport');
 const User = require('../models/user');
-const jwt = require('../auth/index')
+const jwt = require('../auth/index');
+const config = require('../config');
 
 exports.postSignup = (req, res, next) => {
   const newUser = new User({
@@ -18,8 +19,9 @@ exports.postSignup = (req, res, next) => {
       req.logIn(newUser, (err) => {
         if (err) return next(err);
 
-        const token = jwt.sign(newUser, 'andrey')
-        console.log('Este es el token -> ', token)
+        const payload = { name: newUser.name, email: newUser.email }
+        const token = jwt.sign(payload, config.secret)
+        // console.log('Este es el token -> ', token)
         req.session.token = req.session.token ? req.session.token : req.session.token = token
 
         res.status(200).send({ message: 'User creado exitosamente.', token: token });
@@ -46,12 +48,12 @@ exports.postLogin = (req, res, next) => {
       if (err) return next(err)
 
       const payload = { name: user.name, email: user.email }
-      const token = jwt.sign(payload, 'andrey')
-      console.log('Este es el token -> ', token)
+      const token = jwt.sign(payload, config.secret)
+      // console.log('Este es el token -> ', token)
       req.session.token = req.session.token ? req.session.token : req.session.token = token
 
-      // res.status(200).send({ message: 'Login exitoso', token: token });
-      res.status(200).render('user');
+      res.status(200).send('Login exitoso');
+      // res.status(200).render('user');
     })
   })(req, res, next)
 }
