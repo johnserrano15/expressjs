@@ -10,3 +10,39 @@ html
             img(src=user.photo)
           h1 Bienvenido, #{user.name}
           h2 Gracias por inciar sesión usando #{user.provider}
+          //- p #{token}
+        //- div#foo(data-token=token)
+        button#page-protected Get page
+        a(href="/logout") Salir
+
+script.
+  //- console.log("#{token}")
+  //- var token ="#{token}";
+  const token = localStorage.getItem('token')
+  //- console.log(token)
+  if (!token) {
+    console.log('Se agrego el token')
+    localStorage.setItem('token', "#{token}");
+  } else {
+    console.log('Ya tienes un token')
+  }
+
+  document.getElementById('page-protected')
+  .addEventListener('click', () => {
+    //- console.log('ok')
+    const myHeaders = new Headers();
+    // Entonces endicamos que al headers authorization le vamos agregar el token, 
+    // Por defecto se envia authorization: Barer por eso lo hacemos de esa forma con el Barer
+    //- console.info(localStorage.token)
+    myHeaders.append('Authorization', 'Bearer '+ localStorage.token);
+    
+    // fetch es la nueva forma de ES6
+    fetch('/protected', {
+      methos: 'GET',
+      headers: myHeaders
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.info(data)
+    })
+  })

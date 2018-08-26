@@ -5,3 +5,13 @@ html
     h1!= message
 
     a(href='/auth/facebook') Login with Facebook
+
+script.
+  const token = localStorage.getItem('token')
+  //- console.log(token)
+  if (token) {
+    localStorage.removeItem('token');
+    console.log('Se Elimino el token')
+  } else {
+    console.log('No tienes un token')
+  }

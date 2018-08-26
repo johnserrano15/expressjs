@@ -56,11 +56,16 @@ app.get('/login/facebook', (req, res) => {
 })
 
 app.get('/user', auth.isAuthenticate, (req, res) => {
-  res.render('user', {user: req.user})
+  // console.log(req.session.token)
+  res.render('user', { user: req.user, token: req.session.token })
 })
 
 app.post('/signup', userCtrl.postSignup);
 app.post('/login', userCtrl.postLogin);
+
+app.get('/login', (req, res) => {
+  res.render('login');
+})
 
 app.get('/logout', auth.isAuthenticate, userCtrl.logout); // Si esta autenticado, si haga el logout
 
@@ -84,14 +89,20 @@ Payload
   "iat":1516239022
 }
 */
+
+app.get('/verify', (req, res) => {
+  auth.verify(req.session.token, 'andrey', console.log)
+  res.status(200).send('Ok todo bien')
+})
+
 app.get('/protected', jwt({ secret: 'andrey' }), (req, res) => {
   const { user } = req;
-  if (!user || !user.username) {
+  if (!user || !user.name) {
     return res.status(404).send('Not authorized')
   }
 
   console.log(user)
-  if (!req.user.admin) return res.sendStatus(401);
+  // if (!req.user.admin) return res.sendStatus(401);
   res.status(200).send(user)
 })
 

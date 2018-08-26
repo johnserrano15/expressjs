@@ -1,5 +1,6 @@
 const passport = require('passport');
 const User = require('../models/user');
+const jwt = require('../auth/index')
 
 exports.postSignup = (req, res, next) => {
   const newUser = new User({
@@ -17,7 +18,11 @@ exports.postSignup = (req, res, next) => {
       req.logIn(newUser, (err) => {
         if (err) return next(err);
 
-        res.status(200).send('User creado exitosamente.');
+        const token = jwt.sign(newUser, 'andrey')
+        console.log('Este es el token -> ', token)
+        req.session.token = req.session.token ? req.session.token : req.session.token = token
+
+        res.status(200).send({ message: 'User creado exitosamente.', token: token });
       })
     })
   })
@@ -40,7 +45,13 @@ exports.postLogin = (req, res, next) => {
     req.logIn(user, (err) => {
       if (err) return next(err)
 
-      res.status(200).send('Login exitoso');
+      const payload = { name: user.name, email: user.email }
+      const token = jwt.sign(payload, 'andrey')
+      console.log('Este es el token -> ', token)
+      req.session.token = req.session.token ? req.session.token : req.session.token = token
+
+      // res.status(200).send({ message: 'Login exitoso', token: token });
+      res.status(200).render('user');
     })
   })(req, res, next)
 }
@@ -48,5 +59,6 @@ exports.postLogin = (req, res, next) => {
 exports.logout = (req, res) => {
   req.logout();
   // res.redirect('/');
-  res.status(200).send('Logout exitoso.')
+  // res.status(200).send('Logout exitoso.')
+  res.status(200).render('index');
 }
