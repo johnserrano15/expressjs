@@ -79,6 +79,14 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 app.get('/user/info', auth.isAuthenticate, (req, res) => {
   res.json(req.user); // Gracias a passport no devuelve un req.user con toda la info del user
 });
+
+app.get('/verify', auth.isAuthenticate, (req, res) => {
+  // console.log(req.session)
+  auth.verify(req.session.token, config.secret, () => {
+    res.status(200).send('sucess')
+  })
+})
+
 /*
 Payload
 {
@@ -90,19 +98,13 @@ Payload
   "iat":1516239022
 }
 */
-
-app.get('/verify', (req, res) => {
-  auth.verify(req.session.token, 'andrey', console.log)
-  res.status(200).send('Ok todo bien')
-})
-
 app.get('/protected', jwt({ secret: config.secret }), (req, res) => {
   const { user } = req;
   if (!user || !user.name) {
     return res.status(404).send('Not authorized')
   }
 
-  console.log(user)
+  // console.log(user)
   // if (!req.user.admin) return res.sendStatus(401);
   res.status(200).send(user)
 })
